@@ -1,18 +1,41 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+	  <Header :today="today"></Header>
+	  <List :today="today"></List>
+	  <Footer @child-event="getsendDate"></Footer>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import Header from '@/components/Header';
+import List from '@/components/List';
+import Footer from '@/components/Footer';
 
 export default {
-  name: 'Home',
-  components: {
-    HelloWorld
-  }
+  	name: 'Home',
+  	components: {
+		Header,
+		List,
+		Footer
+	},
+	data(){
+		return {
+			today:this.getDate()
+		}
+	},
+	methods:{
+		getDate(){
+            const date = new Date()
+
+            return `${date.getMonth()+1}/${date.getDate()}`
+		},
+		getsendDate(today){
+			if(today !== '/'){
+				this.today = today
+			}else{
+				this.today = this.getDate()
+			}
+		}
+	}
 }
 </script>
